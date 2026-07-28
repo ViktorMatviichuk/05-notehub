@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useDebouncedCallback } from 'use-debounce';
-import css from './App.module.css';
-import { fetchNotes, createNote, deleteNote } from '../../services/noteService';
-import type { CreateNotePayload } from '../../services/noteService';
-import SearchBox from '../SearchBox/SearchBox';
-import Pagination from '../Pagination/Pagination';
-import NoteList from '../NoteList/NoteList';
-import Modal from '../Modal/Modal';
-import NoteForm from '../NoteForm/NoteForm';
+import React, { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useDebouncedCallback } from "use-debounce";
+import css from "./App.module.css";
+import { fetchNotes, createNote, deleteNote } from "../../services/noteService";
+import type { CreateNotePayload } from "../../services/noteService";
+import SearchBox from "../SearchBox/SearchBox";
+import Pagination from "../Pagination/Pagination";
+import NoteList from "../NoteList/NoteList";
+import Modal from "../Modal/Modal";
+import NoteForm from "../NoteForm/NoteForm";
 
 const App: React.FC = () => {
   const [page, setPage] = useState(1);
-  const [search, setSearch] = useState('');
-  const [debouncedSearch, setDebouncedSearch] = useState('');
+  const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const queryClient = useQueryClient();
@@ -29,14 +29,14 @@ const App: React.FC = () => {
   };
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['notes', page, debouncedSearch],
+    queryKey: ["notes", page, debouncedSearch],
     queryFn: () => fetchNotes({ page, perPage: 12, search: debouncedSearch }),
   });
 
   const createMutation = useMutation({
     mutationFn: (newNote: CreateNotePayload) => createNote(newNote),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['notes'] });
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
       setIsModalOpen(false);
     },
   });
@@ -44,7 +44,7 @@ const App: React.FC = () => {
   const deleteMutation = useMutation({
     mutationFn: (id: string) => deleteNote(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['notes'] });
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
     },
   });
 
@@ -71,8 +71,11 @@ const App: React.FC = () => {
       {isLoading && <p>Loading notes...</p>}
       {isError && <p>Error loading notes.</p>}
 
-      {data && data.data && data.data.length > 0 && (
-        <NoteList notes={data.data} onDelete={(id) => deleteMutation.mutate(id)} />
+      {data && data.notes && data.notes.length > 0 && (
+        <NoteList
+          notes={data.notes}
+          onDelete={(id) => deleteMutation.mutate(id)}
+        />
       )}
 
       {isModalOpen && (
