@@ -29,17 +29,8 @@ const Pagination: React.FC<PaginationProps> = ({
       pageRangeDisplayed={3}
       onPageChange={onPageChange}
       forcePage={forcePage}
-      containerClassName={css.container}
-      pageClassName={css.pageItem}
-      pageLinkClassName={css.pageLink}
-      previousClassName={css.previous}
-      previousLinkClassName={css.pageLink}
-      nextClassName={css.next}
-      nextLinkClassName={css.pageLink}
-      breakClassName={css.break}
-      breakLinkClassName={css.pageLink}
+      containerClassName={css.pagination}
       activeClassName={css.active}
-      disabledClassName={css.disabled}
     />
   );
 };
