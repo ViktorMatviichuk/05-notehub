@@ -1,19 +1,20 @@
-import React, { useState } from "react";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { useDebouncedCallback } from "use-debounce";
-import css from "./App.module.css";
-import { fetchNotes } from "../../services/noteService";
-import SearchBox from "../SearchBox/SearchBox";
-import Pagination from "../Pagination/Pagination";
-import NoteList from "../NoteList/NoteList";
-import Modal from "../Modal/Modal";
-import NoteForm from "../NoteForm/NoteForm";
+import React, { useState } from 'react';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import { useDebouncedCallback } from 'use-debounce';
+import css from './App.module.css';
+import { fetchNotes } from '../../services/noteService';
+import SearchBox from '../SearchBox/SearchBox';
+import Pagination from '../Pagination/Pagination';
+import NoteList from '../NoteList/NoteList';
+import Modal from '../Modal/Modal';
+import NoteForm from '../NoteForm/NoteForm';
 
 const App: React.FC = () => {
   const [page, setPage] = useState(1);
-  const [search, setSearch] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const handleSearchDebounced = useDebouncedCallback((value: string) => {
     setDebouncedSearch(value);
@@ -26,7 +27,7 @@ const App: React.FC = () => {
   };
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["notes", page, debouncedSearch],
+    queryKey: ['notes', page, debouncedSearch],
     queryFn: () => fetchNotes({ page, perPage: 12, search: debouncedSearch }),
     placeholderData: keepPreviousData,
   });
