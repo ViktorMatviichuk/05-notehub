@@ -1,6 +1,7 @@
-import React from 'react';
-import ReactPaginate from 'react-paginate';
-import css from './Pagination.module.css';
+import React from "react";
+import ReactPaginate from "react-paginate";
+const ReactPaginateComponent = (ReactPaginate as any).default || ReactPaginate;
+import css from "./Pagination.module.css";
 
 export interface PaginationProps {
   pageCount: number;
@@ -8,13 +9,17 @@ export interface PaginationProps {
   forcePage?: number;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ pageCount, onPageChange, forcePage }) => {
+const Pagination: React.FC<PaginationProps> = ({
+  pageCount,
+  onPageChange,
+  forcePage,
+}) => {
   if (pageCount <= 1) {
     return null;
   }
 
   return (
-    <ReactPaginate
+    <ReactPaginateComponent
       previousLabel="Previous"
       nextLabel="Next"
       breakLabel="..."
