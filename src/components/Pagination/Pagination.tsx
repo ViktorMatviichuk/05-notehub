@@ -1,7 +1,8 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
-const ReactPaginateComponent = (ReactPaginate as any).default || ReactPaginate;
 import css from "./Pagination.module.css";
+
+const ReactPaginateComponent = (ReactPaginate as any).default || ReactPaginate;
 
 export interface PaginationProps {
   pageCount: number;
