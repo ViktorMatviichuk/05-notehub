@@ -5,11 +5,6 @@ export interface Note {
   title: string;
   content: string;
   tag: NoteTag;
-  createdAt?: string;
-  updatedAt?: string;
-}
-
-export interface FetchNotesResponse {
-  notes: Note[];
-  totalPages: number;
+  createdAt: string;
+  updatedAt: string;
 }
